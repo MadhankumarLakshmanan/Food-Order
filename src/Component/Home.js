@@ -3,13 +3,13 @@ import foodJson from "../Json/Food.json";
 import "./General.css";
 function Home() {
   const [foodType, setFoodType] = useState([]);
-  const [parentFood, setParent] = useState("");
-  const [name, setName] = useState("");
-  const [batterVal, setBatterVal] = useState("");
+  const [parentFood, setParentFood] = useState("");
+  const [foodName, setFoodName] = useState("");
+  const [batterValue, setBatterValue] = useState("");
   const [masterType, setMasterType] = useState([]);
   const [batter, setBatter] = useState([]);
-  const [topings, setTopings] = useState([]);
-  const [finaltypeVal, setfinaltypeVal] = useState("");
+  const [topping, setTopping] = useState([]);
+  const [toppingType, setToppingType] = useState("");
 
   useEffect(() => {
     var uniqueData = [];
@@ -17,100 +17,97 @@ function Home() {
     setFoodType([...new Set(uniqueData)]);
   }, []);
 
-  const handleParentFood = (e) => {
-    setParent(e.target.value);
-    let currentVal = foodJson.filter((x) => x.type === e.target.value);
-    let master = currentVal;
-    setMasterType(master);
+  const handleParentFood = (event) => {
+    setParentFood(event.target.value);
+    let currentValue = foodJson.filter((getJsondata) => getJsondata.type === event.target.value);
+    let masterFood = currentValue;
+    setMasterType(masterFood);
   };
 
-  const handleName = (e) => {
-    setName(e.target.value);
-    let currentVal = foodJson.filter((x) => x.name === e.target.value);
-    let batterDrop =
-      currentVal && currentVal.length > 0 ? currentVal[0].batters.batter : [];
-    setBatter(batterDrop);
+  const handlefoodName = (event) => {
+    setFoodName(event.target.value);
+    let currentValue = foodJson.filter((getJsondata) => getJsondata.name === event.target.value);
+    let batterType =
+    currentValue && currentValue.length > 0 ? currentValue[0].batters.batter : [];
+    setBatter(batterType);
   };
 
-  const handleBatter = (e) => {
-    setBatterVal(e.target.value);
-    let currentVal = foodJson.filter((x) => x.name === name);
-    let toppingDrop =
-      currentVal && currentVal.length > 0 ? currentVal[0].topping : [];
-    setTopings(toppingDrop);
+  const handleBatter = (event) => {
+    setBatterValue(event.target.value);
+    let currentValue = foodJson.filter((getJsondata) => getJsondata.name === foodName);
+    let toppingType =
+    currentValue && currentValue.length > 0 ? currentValue[0].topping : [];
+    setTopping(toppingType);
   };
 
-  const handleTopping = (e) => {
-    setfinaltypeVal(e.target.value);
+  const handleTopping = (event) => {
+    setToppingType(event.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (event) => {
     alert(
-      `Order Confirmed... \n ${parentFood} \n ${name} \n ${batterVal} \n ${finaltypeVal}`
+      `Order Confirmed... \n ${parentFood} \n ${foodName} \n ${batterValue} \n ${toppingType}`
     );
-    console.log(`${parentFood}  ${name}  ${batterVal}  ${finaltypeVal}`);
+    console.log(`${parentFood}  ${foodName}  ${batterValue}  ${toppingType}`);
   };
   return (
     <div className="">
-      <form className="formControl" onSubmit={(e) => handleSubmit(e)}>
+      <form className="formControl" onSubmit={(event) => handleSubmit(event)}>
         <div>
           <h2 className="text-weight">Food Order</h2>
         </div>
         <div className="pt-15">
-          <select className="formSelect" onChange={(e) => handleParentFood(e)}>
-            <option key={0} selected="true" disabled="disabled">
+          <select className="formSelect" onChange={(event) => handleParentFood(event)}>
+            <option key={0} selected={true} disabled="disabled">
               Select
             </option>
             {foodType.map((jsondata) => (
               <option key={jsondata} value={jsondata}>
-                {jsondata}{" "}
+                {jsondata}
               </option>
             ))}
           </select>
         </div>
         <div className="pt-15">
-          <select className="formSelect" onChange={(e) => handleName(e)}>
-            <option key={0} selected="true" disabled="disabled">
+          <select className="formSelect" onChange={(event) => handlefoodName(event)}>
+            <option key={0} selected={true} disabled="disabled">
               Select
             </option>
             {masterType.map((jsondata) => (
               <>
-                <option key={jsondata.name} value={jsondata.name}>
-                  {jsondata.name}{" "}
+                <option key={jsondata.name} value={jsondata.name} >
+                  {jsondata.name}
                 </option>
               </>
             ))}
           </select>
         </div>
         <div className="pt-15">
-          <select className="formSelect" onChange={(e) => handleBatter(e)}>
-            <option key={0} selected="true" disabled="disabled">
+          <select className="formSelect" onChange={(event) => handleBatter(event)} required>
+            <option key={0} selected={true} disabled="disabled" required>
               Select
             </option>
             {batter.map((jsondata) => (
-              <option key={jsondata.id} value={jsondata.type}>
-                {jsondata.type}{" "}
+              <option key={jsondata.id} value={jsondata.type} >
+                {jsondata.type}
               </option>
             ))}
           </select>
         </div>
         <div className="pt-15">
-          <select className="formSelect" onChange={(e) => handleTopping(e)}>
-            <option key={0} selected="true" disabled="disabled">
+          <select className="formSelect" onChange={(event) => handleTopping(event)} >
+            <option key={0} selected={true} disabled="disabled">
               Select
             </option>
-            {topings.map((jsondata) => (
-              <option key={jsondata.id} value={jsondata.type}>
-                {jsondata.type}{" "}
+            {topping.map((jsondata) => (
+              <option key={jsondata.id} value={jsondata.type} >
+                {jsondata.type}
               </option>
             ))}
           </select>
         </div>
         <div className="evSubmitDiv pt-15">
-          {" "}
-          <button className=" evSubmit" type="submit">
-            Submit
-          </button>
+          <input className=" evSubmit" type="submit" text="Submit" />
         </div>
       </form>
     </div>
